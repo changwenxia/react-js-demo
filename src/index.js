@@ -1,6 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import {RouterProvider} from 'react-router-dom';
+import { globalRouters } from '@/router';
+
+import {ConfigProvider} from 'antd';
+import { store} from '@/store';
+import {Provider} from 'react-redux';
+
+// 引入Ant Design中文语言包
+import zhCN from 'antd/locale/zh_CN';
+import '@/common/styles/frame.less';
+
+
+if (process.env.NODE_ENV === 'development') {
+    require('./mock');
+}
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+    <Provider store={store}>
+        <ConfigProvider locale={zhCN}>
+            <RouterProvider router={globalRouters}/>
+        </ConfigProvider>
+    </Provider>
+);
